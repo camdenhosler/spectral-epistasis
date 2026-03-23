@@ -1,0 +1,50 @@
+# --- macOS System Files ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+# If you use JupyterLab's "Virtual Documents" for LSP (coding assistance)
+.virtual_documents/
+
+# --- Python / Environments ---
+# Ignore the entire virtual environment folder
+venv/
+env/
+.env/
+bin/
+lib/
+# Specific to Anaconda/Conda
+.conda/
+
+# --- Python Build & Cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Data and Logs ---
+# It is common to ignore large data files or logs
+*.log
+data/
+# If you have large CSV or ZIP files you don't want to push
+# *.csv
+# *.zip
+# *.tar.gz
