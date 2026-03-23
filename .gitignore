@@ -40,6 +40,9 @@ wheels/
 .installed.cfg
 *.egg
 
+# --- Visual Studio Code ---
+.vscode/
+
 # --- Data and Logs ---
 # It is common to ignore large data files or logs
 *.log
