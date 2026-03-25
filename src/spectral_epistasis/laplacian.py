@@ -4,18 +4,22 @@
 import numpy as np
 import xgi
 
-def spectral_gap(H):
+def spectral_gap(H, normalize=False):
     """
     Parameters
     ----------
     H : Hypergraph
         A hypergraph is a collection of subsets of a set of nodes
         or vertices.
+    normalize : Boolean
+        A boolean indicating whether or not the spectral gap will be
+        normalized by the size of the graph.
 
     Returns
     -------
-    spectral_gap : numpy.float64
-        Scalar representing the spectral gap of the hypergaph
+    spectral_gap : Float
+        Scalar representing the spectral gap of the hypergraph.
+
 
     Note
     ----
@@ -28,6 +32,7 @@ def spectral_gap(H):
     Since lambda_0 is expected to be 0 for a connected graph the 
     spectral gap is just lambda_1 not lambda_1 - lambda_0
     """
+
     L = xgi.normalized_hypergraph_laplacian(H, weighted=False, sparse=False)
     eigenvalues = np.linalg.eigvalsh(L)
     eigenvalues = np.sort(eigenvalues)
@@ -35,6 +40,9 @@ def spectral_gap(H):
     assert np.isclose(eigenvalues[0], 0, atol=1e-10), \
         f"Expected lambda_0 ≈ 0, got {eigenvalues[0]}"
 
-
-    spectral_gap = eigenvalues[1]
+    if normalize:
+        spectral_gap = eigenvalues[1] / H.num_nodes
+    else:
+        spectral_gap = eigenvalues[1]
+    
     return spectral_gap
