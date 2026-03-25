@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import xgi
 from spectral_epistasis.laplacian import spectral_gap
 from spectral_epistasis.knockout import knockout_nodes
 
@@ -24,6 +25,7 @@ def epistasis_coef(H, node_A, node_B, normalize=False):
     eps : Float
         The epistatic coeffiecent.
     """
+
     HA = knockout_nodes(H, [node_A])
     HB = knockout_nodes(H, [node_B])
     HAB = knockout_nodes(H, [node_A,node_B])
@@ -53,6 +55,9 @@ def epistasis_matrix(H, normalize=False):
         epistatic coeffecient of node i and j.  Where a np.nan
         entry is left for undefined values (when the graph is 
         disconnected).
+    nodes : List of integers
+        A list of node "numbers" used to index nodes in the case that
+        they don't form a continous sequence of integers.
     """
 
     nodes = list(H.nodes)
@@ -62,14 +67,16 @@ def epistasis_matrix(H, normalize=False):
     for i in range(n):
         for j in range(i, n):
             try:
-                if i != j:
-                    eps = epistasis_coef(H, nodes[i], nodes[j], normalize)
-                else:
-                    eps = 0
+                #if i != j:
+                #    eps = epistasis_coef(H, nodes[i], nodes[j], normalize)
+                #else:
+                #    eps = 0
+                eps = epistasis_coef(H, nodes[i], nodes[j], normalize)
+                
                 matrix[i, j] = eps
                 matrix[j, i] = eps
 
-            except AssertionError:
+            except (AssertionError, xgi.exception.XGIError):
                 pass
 
     return matrix, nodes
